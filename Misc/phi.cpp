@@ -45,9 +45,8 @@ long long chinese_remainder_theorem(vector<Congruence> const& congruences) {
     return solution;
 }
 
-/*
 for (int s=m; ; s=(s-1)&m) {
  ... you can use s ...
  if (s==0)  break;
 }
-*/
+
