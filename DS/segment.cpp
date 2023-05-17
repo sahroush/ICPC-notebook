@@ -5,7 +5,7 @@ struct segment{
     int seg[maxn<<2], lazy[maxn<<2];
     void build(int v = 1, int l = 1, int r = maxn){
         if(r - l == 1){
-            seg[v] = 0;
+            seg[v] = a[rst[l]];
             return;
         }
         build(lc, l, mid);
@@ -15,8 +15,10 @@ struct segment{
     void shift(int v, int l, int r){
         if(!lazy[v])return;
         seg[v] += lazy[v];
-        if(r - l == 1)
-            lazy[v] = 0, return;
+        if(r - l == 1){
+            lazy[v] = 0;
+            return;
+        }
         lazy[lc] += lazy[v];
         lazy[rc] += lazy[v];
         lazy[v] = 0;
@@ -24,23 +26,23 @@ struct segment{
     void update(int L, int R, int val, int v = 1, int l = 1, int r = maxn){
         if(r <= L or R <= l)
             return;
-        shift(v);
+        shift(v, l, r);
         if(L <= l and r <= R){
             lazy[v] += val;
-            shift(v);
+            shift(v, l, r);
             return;
         }        
         update(L, R, val, lc, l, mid);
         update(L, R, val, rc, mid, r);
         seg[v] = seg[lc] + seg[rc];
     }
-    void query(int L, int R, int val, int v = 1, int l = 1, int r = maxn){
+    int query(int L, int R, int v = 1, int l = 1, int r = maxn){
         if(r <= L or R <= l)
             return 0;
-        shift(v);
+        shift(v, l, r);
         if(L <= l and r <= R){
             return seg[v];
         }        
-        return query(L, R, val, lc, l, mid) + query(L, R, val, rc, mid, r);
+        return query(L, R, lc, l, mid) + query(L, R, rc, mid, r);
     }
 };

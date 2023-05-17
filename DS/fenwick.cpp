@@ -8,6 +8,3 @@ int get(int pos){
         ans+=fen[pos];
     return(ans);
 }
-int sum(int l , int r){
-    return(get(r) - get(l - 1));
-}
