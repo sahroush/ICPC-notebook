@@ -1,9 +1,3 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-
-#define endl '\n'
-
 struct strtable{
 	#define MAXN 500010
 	#define LG 20
@@ -88,47 +82,5 @@ void LCP(strtable *st){
 				v += (1 << j);
 			}
 		}
-	}
-}
-
-int zlcp[MAXN]; //zlcp[i] == lcp(s[i , .... , n-1] , s[0 , ... , n-1])
-void ZAlgo(strtable *st){
-	for(int i = 0 ; i < st-> n ; i ++){
-		int u = i , v = 0;
-		for(int j = LG ; ~j ; j --)if(u + (1 << j) -1 < st->n and v + (1 << j) - 1 < st->n){
-			if(st->rnk[j][u] == st->rnk[j][v]){
-				zlcp[i] += (1 << j);
-				u += (1 << j);
-				v += (1 << j);
-			}
-		} 
-	}
-}
-
-#define SIGMA 26
-
-int nxt[SIGMA][MAXN] , f[MAXN] , ext[MAXN] , sz = 0;
-bool endpoint[MAXN];
-
-int add(string &s){
-	int cur = 0;
-	for(char c : s){
-		if(!nxt[c - 'a'][cur])nxt[c - 'a'][cur] = ++sz;
-		cur = nxt[c - 'a'][cur];
-	}
-	endpoint[cur] = 1;
-	return cur;
-}
-
-void build(){//q is a queue
-	for(int i = 0 ; i < SIGMA ; i ++)if(nxt[i][0])q.push(nxt[i][0]);
-	while(q.size()){
-		int v = q.front();
-		q.pop();
-		if(endpoint[f[v]])ext[v] = f[v];
-		else ext[v] = ext[f[v]];
-		for(int i = 0 ; i < SIGMA ; i ++)
-			if(nxt[i][v])f[nxt[i][v]] = nxt[i][f[v]] , q.push(nxt[i][v]);
-			else nxt[i][v] = nxt[i][f[v]];
 	}
 }
