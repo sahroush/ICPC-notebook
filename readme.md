@@ -1,3 +1,3 @@
-# Accurix-Templates
-Template archive used for icpc contests by team Accurix
+# ICPC notebook
+Notebook used for icpc contests (?)
 
