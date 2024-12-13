@@ -1,11 +1,12 @@
 #define lc (v<<1)
 #define rc (lc|1)
 #define mid ((l+r)>>1)
+//This is for range add range sum, modify accordingly
 struct segment{
-    int seg[maxn<<2], lazy[maxn<<2];
+    ll seg[maxn<<2], lazy[maxn<<2];
     void build(int v = 1, int l = 1, int r = maxn){
         if(r - l == 1){
-            seg[v] = a[rst[l]];
+            seg[v] = a[l];
             return;
         }
         build(lc, l, mid);
@@ -14,7 +15,7 @@ struct segment{
     }
     void shift(int v, int l, int r){
         if(!lazy[v])return;
-        seg[v] += lazy[v];
+        seg[v] += lazy[v]*(r-l);
         if(r - l == 1){
             lazy[v] = 0;
             return;
@@ -36,7 +37,7 @@ struct segment{
         update(L, R, val, rc, mid, r);
         seg[v] = seg[lc] + seg[rc];
     }
-    int query(int L, int R, int v = 1, int l = 1, int r = maxn){
+    ll query(int L, int R, int v = 1, int l = 1, int r = maxn){
         if(r <= L or R <= l)
             return 0;
         shift(v, l, r);
