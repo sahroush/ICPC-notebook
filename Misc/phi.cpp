@@ -1,15 +1,15 @@
 int phi(int n) {
-    int result = n;
+    int ans = n;
     for (int i = 2; i * i <= n; i++) {
         if (n % i == 0) {
             while (n % i == 0)
                 n /= i;
-            result -= result / i;
+            ans -= ans / i;
         }
     }
     if (n > 1)
-        result -= result / n;
-    return result;
+        ans -= ans / n;
+    return ans;
 }
 
 void phi_1_to_n(int n) {
@@ -25,28 +25,5 @@ void phi_1_to_n(int n) {
     }
 }
 
-struct Congruence {
-    long long a, m;
-};
 
-long long chinese_remainder_theorem(vector<Congruence> const& congruences) {
-    long long M = 1;
-    for (auto const& congruence : congruences) {
-        M *= congruence.m;
-    }
-
-    long long solution = 0;
-    for (auto const& congruence : congruences) {
-        long long a_i = congruence.a;
-        long long M_i = M / congruence.m;
-        long long N_i = mod_inv(M_i, congruence.m);
-        solution = (solution + a_i * M_i % M * N_i) % M;
-    }
-    return solution;
-}
-
-for (int s=m; ; s=(s-1)&m) {
- ... you can use s ...
- if (s==0)  break;
-}
 
